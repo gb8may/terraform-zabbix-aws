@@ -1,5 +1,39 @@
 #!/bin/bash
 
+#████████╗███████╗██████╗ ██████╗  █████╗ ███████╗ ██████╗ ██████╗ ███╗   ███╗    ██████╗  ██████╗ ██╗  ██╗
+#╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔═══██╗██╔══██╗████╗ ████║    ██╔══██╗██╔═══██╗╚██╗██╔╝
+#   ██║   █████╗  ██████╔╝██████╔╝███████║█████╗  ██║   ██║██████╔╝██╔████╔██║    ██████╔╝██║   ██║ ╚███╔╝ 
+#   ██║   ██╔══╝  ██╔══██╗██╔══██╗██╔══██║██╔══╝  ██║   ██║██╔══██╗██║╚██╔╝██║    ██╔══██╗██║   ██║ ██╔██╗ 
+#   ██║   ███████╗██║  ██║██║  ██║██║  ██║██║     ╚██████╔╝██║  ██║██║ ╚═╝ ██║    ██████╔╝╚██████╔╝██╔╝ ██╗
+#   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝
+
+dialog                                    \
+   --title 'Terraform BOX'                \
+   --infobox '\nLoading. Please wait...'  \
+   0 0
+
+if ! dialog -v &> /dev/null
+then
+	sudo apt update && sudo apt install dialog -y
+fi
+
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - &> /dev/null
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" &> /dev/null
+
+dialog                                              \
+   --title 'Terraform BOX'                          \
+   --yesno '\nWould you like to install Terraform?' \
+   0 0
+
+if [ $? = "0" ]
+then
+	dialog                                    \
+   	--title 'Terraform BOX'                \
+   	--infobox '\nInstalling. Please wait...'  \
+   	0 0
+	sudo apt-get update &> /dev/null && sudo apt-get install terraform -y &> /dev/null
+fi
+
 s3_aws_region=$( dialog --stdout --title 'Terraform BOX' --inputbox 'Enter your S3 bucket region:' 0 0 )
 bucket_name=$( dialog --stdout --title 'Terraform BOX' --inputbox 'Enter your S3 bucket name:' 0 0 )
 aws_region=$( dialog --stdout --title 'Terraform BOX' --inputbox 'Enter the AWS region:' 0 0 )
@@ -16,11 +50,15 @@ cat template_files/user-data.tmp | sed "s/{{zbx_usr}}/${zbx_usr}/g" | sed "s/{{z
 cat template_files/variables.tmp | sed "s/{{AWS_REGION}}/${aws_region}/g" | sed "s/{{AMI_ID}}/${ami_id}/g" | sed "s/{{SSH_KEY}}/${ssh_key}/g" | sed "s/{{PEM_FILE}}/${pem_file}/g" | sed "s/{{IP_ADDR}}/${ip_addr}/g" > variables.tf
 
 action=$( dialog --stdout --title 'Terraform BOX' \
-	--radiolist 'Choose one option:' \
-	0 0 0 1 'Terraform Init' off \
-              2 'Terraform Plan' off \
-              3 'Terraform Apply' off \
-              4 'Terraform Destroy' off \
-	)
+	--menu 'Choose one option:' 0 0 0 \
+	      1 'Terraform Init' \
+              2 'Terraform Plan' \
+              3 'Terraform Apply' \
+              4 'Terraform Destroy' )
 
-terraform $action
+case $action in
+	1) clear && terraform init ;;
+	2) clear && terraform plan ;;
+	3) clear && terraform apply ;;
+	4) clear && terraform destroy ;;
+esac
