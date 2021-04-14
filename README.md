@@ -7,4 +7,4 @@
 <hr>
 
 - Put your public key and pem file on the directory.
-- Run the script **load_info.sh** and have fun!
+- Run the script **terraform_box.sh** and have fun!
