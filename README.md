@@ -1,0 +1,1 @@
+# terraform-zabbix-aws
