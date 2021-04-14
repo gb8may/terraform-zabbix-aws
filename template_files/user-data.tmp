@@ -19,8 +19,8 @@ ZABBIX_REPO_URL="https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-re
 
 DB_HOST="localhost"
 DB_PORT=3306
-DB_USER="zabbix"
-DB_PASS="zabbix"
+DB_USER="{{zbx_usr}}"
+DB_PASS="{{zbx_pwd}}"
 DB_NAME="zabbix"
 ZBX_SERVER_HOST="localhost"
 

@@ -7,15 +7,15 @@
 
 provider "aws" {
   region = var.my_aws_region
-  profile = "<YOUR_AWS_PROFILE_NAME>"
+  profile = "default"
   version = "~> 2.7"
 }
 
 terraform {
   backend "s3" {
-    profile = "<YOUR_AWS_PROFILE_NAME>"
-    region  = "<YOUR_AWS_REGION>"
-    bucket  = "<YOUR_BUCKET_NAME>"
+    profile = "default"
+    region  = "{{S3_AWS_REGION}}"
+    bucket  = "{{BUCKET_NAME}}"
     key     = "main.tfstate"
   }
 }                                                                                                                                                                                        
@@ -81,7 +81,7 @@ resource "aws_security_group" "zabbix-server" {
 ###############
 
 resource "aws_instance" "instance-zabbix-server" {
-  instance_type               = "t3a.small"
+  instance_type               = "{{EC2_TYPE}}"
   ami                         = var.ec2_image_id
   vpc_security_group_ids      = [aws_security_group.zabbix-server.id]
   subnet_id                   = aws_subnet.public-subnet-1.id
