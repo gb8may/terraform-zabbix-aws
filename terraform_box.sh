@@ -62,10 +62,10 @@ action=$( dialog --stdout --title 'Terraform BOX' \
       	      5 'Exit' )
 
 case $action in
-	1) clear && terraform init && sleep 10s ;;
-	2) clear && terraform plan && sleep 10s ;;
-	3) clear && terraform apply -auto-approve && sleep 10s ;;
-	4) clear && terraform destroy -auto-approve && sleep 10s ;;
+	1) clear && terraform init && sleep 5s ;;
+	2) clear && terraform plan && sleep 5s ;;
+	3) clear && terraform apply -auto-approve && sleep 5s ;;
+	4) clear && terraform destroy -auto-approve && sleep 5s ;;
 	5) clear && exit 1 ;;
 esac
 
