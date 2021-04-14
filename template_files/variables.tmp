@@ -14,11 +14,11 @@ variable ec2_image_id {
 }
 
 variable ec2_key_name {
-  default = "{{SSH_KEY}}"
+  default = "{{PEM_FILE}}"
 }
 
 variable ec2_key_filename {
-  default = "{{PEM_FILE}}"
+  default = "{{SSH_KEY}}"
 }
 
 variable "my_ip_addresses" {
