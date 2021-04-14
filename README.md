@@ -6,5 +6,7 @@
 
 <hr>
 
+- Directions Under Construction.......
+
 - Put your public key and pem file on the directory.
 - Run the script **terraform_box.sh** and have fun!
