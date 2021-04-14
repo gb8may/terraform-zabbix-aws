@@ -1,1 +1,1 @@
-# terraform-zabbix-aws
+# Zabbix with Terraform (AWS)
