@@ -6,5 +6,5 @@
 
 <hr>
 
-Put your public key and pem file on the directory.
-Run the script **load_info.sh** and have fun!
+- Put your public key and pem file on the directory.
+- Run the script **load_info.sh** and have fun!
